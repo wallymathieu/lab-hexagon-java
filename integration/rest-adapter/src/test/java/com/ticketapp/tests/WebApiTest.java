@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Scanner;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpEntity;
@@ -23,12 +23,14 @@ public class WebApiTest {
 
 	private static ConfigurableApplicationContext applicationContext;
 
-	@BeforeClass
+	@BeforeAll
 	public static void startApplication() {
-		applicationContext = SpringApplication.run(TicketappWebApplication.class);
+		applicationContext = SpringApplication.run(TicketappWebApplication.class,
+				"--spring.main.allow-bean-definition-overriding=true",
+				"--spring.jpa.defer-datasource-initialization=true");
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void stopApplication() {
 		if (applicationContext != null) {
 			applicationContext.close();
