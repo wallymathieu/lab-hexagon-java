@@ -5,19 +5,37 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.ticketapp.TestContext;
+import com.ticketapp.TicketappWebApplication;
 import com.ticketapp.rest.domain.Ticket;
 
 public class WebApiTest {
 
-	// TODO: enable this test
-	//@Test
+	private static ConfigurableApplicationContext applicationContext;
+
+	@BeforeClass
+	public static void startApplication() {
+		applicationContext = SpringApplication.run(TicketappWebApplication.class);
+	}
+
+	@AfterClass
+	public static void stopApplication() {
+		if (applicationContext != null) {
+			applicationContext.close();
+		}
+	}
+
+	@Test
 	public void testCreateTicket() {
 		ResponseEntity<Ticket> response = createTicket();
 
